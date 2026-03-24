@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jacob's Chess Tutoring</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1a1a1a; background: #ffffff; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; background: #ffffff; z-index: 10; }
+    .nav-logo { font-size: 18px; font-weight: 500; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { font-size: 14px; color: #666; text-decoration: none; cursor: pointer; }
+    .nav-links a:hover { color: #1a1a1a; }
+    section { padding: 4rem 2rem; max-width: 860px; margin: 0 auto; }
+    .hero { text-align: center; padding: 5rem 2rem; max-width: 860px; margin: 0 auto; }
+    .hero-badge { display: inline-block; margin-bottom: 1rem; background: #EEEDFE; color: #3C3489; font-size: 12px; padding: 4px 14px; border-radius: 8px; }
+    .hero h1 { font-size: 36px; font-weight: 500; margin-bottom: 1rem; line-height: 1.25; }
+    .hero p { font-size: 17px; color: #555; line-height: 1.7; max-width: 540px; margin: 0 auto 1.5rem; }
+    .hero-tags { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+    .hero-tag { font-size: 13px; padding: 5px 14px; border-radius: 8px; border: 1px solid #ddd; color: #555; }
+    .btn-primary { display: inline-block; padding: 10px 24px; background: #1a1a1a; color: #ffffff; border-radius: 8px; font-size: 15px; text-decoration: none; cursor: pointer; border: none; }
+    .btn-primary:hover { opacity: 0.85; }
+    .chess-icon { font-size: 56px; margin-bottom: 1.5rem; }
+    .section-label { font-size: 12px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .section-title { font-size: 26px; font-weight: 500; margin-bottom: 1.5rem; }
+    .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2.5rem; align-items: start; }
+    .avatar { width: 100%; aspect-ratio: 1; border-radius: 12px; background: #EEEDFE; display: flex; align-items: center; justify-content: center; font-size: 52px; border: 1px solid #e5e5e5; }
+    .about-text p { font-size: 15px; color: #555; line-height: 1.8; margin-bottom: 1rem; }
+    .format-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+    .format-card { background: #f7f7f7; border-radius: 12px; border: 1px solid #e5e5e5; padding: 1rem 1.25rem; }
+    .format-card-icon { font-size: 20px; margin-bottom: 0.5rem; }
+    .format-card-title { font-size: 14px; font-weight: 500; margin-bottom: 0.25rem; }
+    .format-card-desc { font-size: 13px; color: #666; line-height: 1.6; }
+    hr.divider { border: none; border-top: 1px solid #e5e5e5; margin: 0; }
+    .rates-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .rate-card { background: #ffffff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 1.5rem; }
+    .rate-card.featured { border: 2px solid #534AB7; }
+    .rate-badge { display: inline-block; margin-bottom: 0.75rem; background: #EEEDFE; color: #3C3489; font-size: 11px; padding: 3px 10px; border-radius: 8px; }
+    .rate-name { font-size: 16px; font-weight: 500; margin-bottom: 0.25rem; }
+    .rate-price { font-size: 28px; font-weight: 500; margin: 0.5rem 0; }
+    .rate-price span { font-size: 14px; font-weight: 400; color: #666; }
+    .rate-desc { font-size: 13px; color: #666; line-height: 1.6; }
+    .rate-features { list-style: none; margin-top: 1rem; }
+    .rate-features li { font-size: 13px; color: #666; padding: 4px 0; display: flex; gap: 8px; }
+    .rate-features li::before { content: "✓"; color: #534AB7; font-weight: 500; }
+    .contact-card { background: #ffffff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 2rem; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .contact-info p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 1.5rem; }
+    .contact-detail { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; font-size: 14px; }
+    .contact-icon { width: 32px; height: 32px; border-radius: 8px; background: #EEEDFE; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .contact-form { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-form input, .contact-form textarea, .contact-form select { width: 100%; padding: 8px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: #f7f7f7; color: #1a1a1a; font-family: inherit; }
+    .contact-form textarea { height: 90px; resize: vertical; }
+    .submit-btn { padding: 10px; font-size: 14px; font-weight: 500; background: #1a1a1a; color: #ffffff; border: none; border-radius: 8px; cursor: pointer; }
+    footer { text-align: center; padding: 2rem; font-size: 13px; color: #999; border-top: 1px solid #e5e5e5; }
+    @media (max-width: 600px) {
+      .about-grid, .contact-grid, .format-cards { grid-template-columns: 1fr; }
+      nav { padding: 1rem; }
+      .nav-links { gap: 1rem; }
+      .hero h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">♟ Jacob's Chess</div>
+  <div class="nav-links">
+    <a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a>
+    <a onclick="document.getElementById('rates').scrollIntoView({behavior:'smooth'})">Rates</a>
+    <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="chess-icon">♟</div>
+  <div class="hero-badge">Chess Tutor</div>
+  <h1>Learn chess the right way</h1>
+  <p>Personalized lessons for beginners and intermediate players — in person or online, on your schedule.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">In person</span>
+    <span class="hero-tag">Online</span>
+    <span class="hero-tag">Beginner friendly</span>
+    <span class="hero-tag">Intermediate</span>
+  </div>
+  <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a lesson</button>
+</div>
+
+<hr class="divider">
+
+<section id="about">
+  <div class="section-label">About me</div>
+  <div class="about-grid">
+    <div class="avatar">♟</div>
+    <div class="about-text">
+      <div class="section-title">Hi, I'm Jacob</div>
+      <p>I've been playing chess since I was a kid and I love helping others discover the game. Whether you're just learning how the pieces move or trying to level up your strategy, I'll meet you where you are.</p>
+      <p>My lessons focus on understanding the "why" behind every move — not just memorizing openings. We'll work on tactics, strategy, and how to think like a chess player.</p>
+      <div class="format-cards">
+        <div class="format-card">
+          <div class="format-card-icon">📍</div>
+          <div class="format-card-title">In person</div>
+          <div class="format-card-desc">Meet locally at a library, cafe, or your home. Great for hands-on learning.</div>
+        </div>
+        <div class="format-card">
+          <div class="format-card-icon">💻</div>
+          <div class="format-card-title">Online</div>
+          <div class="format-card-desc">Play and learn via Chess.com or Lichess. Easy to fit into any schedule.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="rates">
+  <div class="section-label">Pricing</div>
+  <div class="section-title">Simple, transparent rates</div>
+  <div class="rates-grid">
+    <div class="rate-card">
+      <div class="rate-name">Single lesson</div>
+      <div class="rate-price">$25 <span>/ hr</span></div>
+      <div class="rate-desc">Perfect for trying a session or working on one specific topic.</div>
+      <ul class="rate-features">
+        <li>60-minute lesson</li>
+        <li>Game review included</li>
+        <li>In person or online</li>
+        <li>No commitment</li>
+      </ul>
+    </div>
+    <div class="rate-card featured">
+      <div class="rate-badge">Most popular</div>
+      <div class="rate-name">4-lesson bundle</div>
+      <div class="rate-price">$85 <span>/ 4 sessions</span></div>
+      <div class="rate-desc">Build real skills with consistent weekly lessons.</div>
+      <ul class="rate-features">
+        <li>Four 60-minute lessons</li>
+        <li>Custom study plan</li>
+        <li>Progress tracking</li>
+        <li>In person or online</li>
+        <li>Save ~15%</li>
+      </ul>
+    </div>
+    <div class="rate-card">
+      <div class="rate-name">Monthly plan</div>
+      <div class="rate-price">$140 <span>/ month</span></div>
+      <div class="rate-desc">For learners who want to improve fast and consistently.</div>
+      <ul class="rate-features">
+        <li>8 lessons per month</li>
+        <li>Puzzle assignments</li>
+        <li>Opening repertoire</li>
+        <li>In person or online</li>
+        <li>Best value</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="contact">
+  <div class="section-label">Get in touch</div>
+  <div class="section-title">Book a lesson</div>
+  <div class="contact-card">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>Ready to start or have questions? Reach out and I'll get back to you within 24 hours to schedule your first session.</p>
+        <div class="contact-detail">
+          <div class="contact-icon">@</div>
+          <span style="color: #666;">your@email.com</span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">♟</div>
+          <span style="color: #666;">Chess.com / Lichess: YourUsername</span>
+        </div>
+      </div>
+      <div class="contact-form">
+        <input type="text" placeholder="Your name">
+        <input type="email" placeholder="Email address">
+        <select>
+          <option value="" disabled selected>Lesson format</option>
+          <option>In person</option>
+          <option>Online</option>
+          <option>Either works for me</option>
+        </select>
+        <select>
+          <option value="" disabled selected>Your level</option>
+          <option>Complete beginner</option>
+          <option>Beginner (know the basics)</option>
+          <option>Intermediate</option>
+        </select>
+        <textarea placeholder="Anything you want to work on or questions you have?"></textarea>
+        <button class="submit-btn">Send message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Jacob's Chess Tutoring · In person & online
+</footer>
+
+</body>
+</html>
