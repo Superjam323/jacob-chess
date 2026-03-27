@@ -44,6 +44,9 @@
     .rate-features { list-style: none; margin-top: 1rem; }
     .rate-features li { font-size: 13px; color: #666; padding: 4px 0; display: flex; gap: 8px; }
     .rate-features li::before { content: "✓"; color: #534AB7; font-weight: 500; }
+    .puzzle-section { background: #f8f8fe; }
+    .puzzle-inner { max-width: 860px; margin: 0 auto; padding: 4rem 2rem; }
+    .puzzle-inner p { font-size: 15px; color: #555; margin-bottom: 2rem; }
     .contact-card { background: #ffffff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 2rem; }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
     .contact-info p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 1.5rem; }
@@ -70,6 +73,7 @@
   <div class="nav-links">
     <a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a>
     <a onclick="document.getElementById('rates').scrollIntoView({behavior:'smooth'})">Rates</a>
+    <a onclick="document.getElementById('puzzle').scrollIntoView({behavior:'smooth'})">Daily Puzzle</a>
     <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a>
   </div>
 </nav>
@@ -96,7 +100,7 @@
     <div class="avatar">♟</div>
     <div class="about-text">
       <div class="section-title">Hi, I'm Jacob</div>
-      <p>I've been playing chess since kindergarten and competing seriously ever since — most recently placing top 10 in nationals. I love helping others discover the game, whether you're just learning how the pieces move or trying to level up your strategy. I'll meet you where you are.</p>
+      <p>I've been playing chess since kindergarten and have placed top 10 in nationals. I love helping others discover the game — whether you're just learning how the pieces move or trying to level up your strategy, I'll meet you where you are.</p>
       <p>My lessons focus on understanding the "why" behind every move — not just memorizing openings. We'll work on tactics, strategy, and how to think like a chess player.</p>
       <div class="format-cards">
         <div class="format-card">
@@ -158,6 +162,26 @@
     </div>
   </div>
 </section>
+
+<hr class="divider">
+
+<div class="puzzle-section">
+  <div class="puzzle-inner" id="puzzle">
+    <div class="section-label">Daily Puzzle</div>
+    <div class="section-title">Can you find the best move?</div>
+    <p>A new puzzle every day. Try to solve it before making a move!</p>
+    <div id="csoDpCon"></div>
+    <script type="text/javascript" src="https://www.chessstrategyonline.com/js/widgets.min.js"></script>
+    <script type="text/javascript">
+      csoDailyPuzzle({
+        boardStyle: "default",
+        pieceStyle: "uscf",
+        showCoordinates: true,
+        width: 420
+      });
+    </script>
+  </div>
+</div>
 
 <hr class="divider">
 
