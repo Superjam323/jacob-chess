@@ -21,7 +21,7 @@
     .hero-tag { font-size: 13px; padding: 5px 14px; border-radius: 8px; border: 1px solid #ddd; color: #555; }
     .btn-primary { display: inline-block; padding: 10px 24px; background: #1a1a1a; color: #ffffff; border-radius: 8px; font-size: 15px; text-decoration: none; cursor: pointer; border: none; }
     .btn-primary:hover { opacity: 0.85; }
-    .chess-icon { font-size: 100px; margin-bottom: 1.5rem; }
+    .chess-icon { font-size: 56px; margin-bottom: 1.5rem; }
     .section-label { font-size: 12px; color: #999; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
     .section-title { font-size: 26px; font-weight: 500; margin-bottom: 1.5rem; }
     .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2.5rem; align-items: start; }
@@ -78,7 +78,6 @@
       .hero h1 { font-size: 28px; }
       #board { width: 100% !important; min-width: unset !important; }
       .puzzle-wrap { flex-direction: column; }
-      .board-container { touch-action: none; width: 100%; }
     }
   </style>
 </head>
@@ -114,13 +113,12 @@
   <div class="section-label">About me</div>
   <div class="about-grid">
     <div class="avatar">
-      <!-- PASTE YOUR PHOTO: replace the src below with your image path or base64 string -->
-      <img src="IMG_0238.JPG" alt="Jacob playing chess">
+      <img src="https://raw.githubusercontent.com/Superjam323/jacob-chess/main/IMG_0238.JPG" alt="Jacob">
     </div>
     <div class="about-text">
       <div class="section-title">Hi, I'm Jacob</div>
-      <p>I've been playing chess since kindergarten and have placed top 10 in nationals. I love helping others discover the game — whether you're just learning how the pieces move or trying to level up your strategy, I'll meet you where you are.</p>
-      <p>My lessons focus on understanding the "why" behind every move — not just memorizing openings. We'll work on tactics, strategy, and how to think like a chess player.</p>
+      <p>I'm a high school student at Collegiate School on the Upper West Side of Manhattan. I've been playing chess since kindergarten and have placed top 10 in nationals — chess has been a huge part of my life for as long as I can remember.</p>
+      <p>I love helping others discover the game. Whether you're just learning how the pieces move or trying to level up your strategy, I'll meet you where you are. My lessons focus on the "why" behind every move — not just memorizing openings. We'll work on tactics, strategy, and how to think like a chess player.</p>
       <div class="format-cards">
         <div class="format-card">
           <div class="format-card-icon">📍</div>
@@ -190,9 +188,7 @@
     <div class="section-title">Try a game against the computer</div>
     <p>You play as white. The computer will respond after each move. Drag pieces to move them.</p>
     <div class="puzzle-wrap">
-      <div class="board-container">
-        <div id="board"></div>
-      </div>
+      <div id="board"></div>
       <div class="puzzle-controls">
         <div class="status-box">
           <strong>Status</strong>
@@ -259,7 +255,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
-
 <script>
   function sendEmail() {
     var name    = document.getElementById('from_name').value.trim();
@@ -269,27 +264,16 @@
     var level   = document.getElementById('skill_level').value || 'Not specified';
     var message = document.getElementById('message').value.trim();
     var msg     = document.getElementById('formMsg');
-
     if (!name || !email) {
       msg.className = 'form-msg error';
       msg.textContent = 'Please enter your name and email.';
       return;
     }
-
     var subject = 'Chess lesson inquiry from ' + name;
-    var body = 'Name: ' + name
-      + '\nEmail: ' + email
-      + '\nPhone: ' + (phone || 'Not provided')
-      + '\nFormat: ' + format
-      + '\nLevel: ' + level
-      + '\n\nMessage:\n' + (message || 'No message');
-
-    window.location.href = 'mailto:jacob.aiden.meyers@gmail.com'
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(body);
-
+    var body = 'Name: ' + name + '\nEmail: ' + email + '\nPhone: ' + (phone || 'Not provided') + '\nFormat: ' + format + '\nLevel: ' + level + '\n\nMessage:\n' + (message || 'No message');
+    window.location.href = 'mailto:jacob.aiden.meyers@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     msg.className = 'form-msg success';
-    msg.textContent = '✓ Your email app should open with the message ready to send!';
+    msg.textContent = 'Your email app should open with the message ready to send!';
   }
 
   var game = new Chess();
@@ -315,62 +299,39 @@
     if (move === null) return 'snapback';
     document.getElementById('lastMove').textContent = 'You played: ' + move.san;
     updateStatus();
-    if (!game.game_over()) {
-      setTimeout(makeComputerMove, 400);
-    }
+    if (!game.game_over()) setTimeout(makeComputerMove, 400);
   }
 
-  function onSnapEnd() {
-    board.position(game.fen());
-  }
+  function onSnapEnd() { board.position(game.fen()); }
 
   function updateStatus() {
     var status = '';
-    if (game.in_checkmate()) {
-      status = game.turn() === 'w' ? 'Game over — computer wins!' : 'Checkmate — you win!';
-    } else if (game.in_draw()) {
-      status = 'Game drawn!';
-    } else if (game.in_check()) {
-      status = game.turn() === 'w' ? 'You are in check!' : 'Computer is in check!';
-    } else {
-      status = game.turn() === 'w' ? 'Your turn' : 'Computer thinking...';
-    }
+    if (game.in_checkmate()) status = game.turn() === 'w' ? 'Game over — computer wins!' : 'Checkmate — you win!';
+    else if (game.in_draw()) status = 'Game drawn!';
+    else if (game.in_check()) status = game.turn() === 'w' ? 'You are in check!' : 'Computer is in check!';
+    else status = game.turn() === 'w' ? 'Your turn' : 'Computer thinking...';
     document.getElementById('status').textContent = status;
   }
 
   function resetGame() {
-    game.reset();
-    board.start();
+    game.reset(); board.start();
     document.getElementById('status').textContent = 'Your turn — play as white';
     document.getElementById('lastMove').textContent = 'None yet';
   }
 
   function undoMove() {
-    game.undo();
-    game.undo();
-    board.position(game.fen());
-    updateStatus();
+    game.undo(); game.undo();
+    board.position(game.fen()); updateStatus();
     document.getElementById('lastMove').textContent = 'Move undone';
   }
 
-  document.addEventListener('touchmove', function(e) {
-    if (e.target.closest('#board')) {
-      e.preventDefault();
-    }
-  }, { passive: false });
-
   board = Chessboard('board', {
-    draggable: true,
-    position: 'start',
-    onDragStart: onDragStart,
-    onDrop: onDrop,
-    onSnapEnd: onSnapEnd,
+    draggable: true, position: 'start',
+    onDragStart: onDragStart, onDrop: onDrop, onSnapEnd: onSnapEnd,
     pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
   });
 
-  window.addEventListener('resize', function() {
-    board.resize();
-  });
+  window.addEventListener('resize', function() { board.resize(); });
 </script>
 
 </body>
